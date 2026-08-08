@@ -28,12 +28,12 @@ if input("tag: ") == Poly1305_MAC(r, s, TARGET).hexdigest():
     print(FLAG)
 ```
 
--
+
 ---
 
 ##  解法の方針
 
-###1. r が公開される
+### 1. r が公開される
 サーバは MAC の鍵の一部である **r をそのまま表示する**。  
 Poly1305 は線形構造を持つため、r が分かれば MAC の式を直接扱える。
 
@@ -41,15 +41,15 @@ Poly1305 は線形構造を持つため、r が分かれば MAC の式を直接�
 ### 2. 任意メッセージの MAC を 1 回取得する
 TARGET（admin=true）は送れないが、任意の message を送ると以下の値が返る：
 
-\[
-MAC(m) = r \cdot acc(m) + s
-\]
+
+MAC(m) = r `*` acc(m) + s
+
 ここで s は秘密。
 
 ---
 
 ### 3. Poly1305_MAC(r, 0, m) で r·acc(m) を計算する
-以下を使うと、内部の acc(m) を r と掛けた値が得られる：
+以下を使うと、内部の acc(m) を r と掛けた値が得られる
 
 ```python
 temp_tag = Poly1305_MAC(r, b'\x00'*16, message)
@@ -58,19 +58,19 @@ temp_tag = Poly1305_MAC(r, b'\x00'*16, message)
 ### 4. s の値を復元する
 サーバから返ってきた **MAC(message)** を `num` とし、  
 先ほど求めた **r·acc(message)** を `temp_tag` とすると、  
-Poly1305 の基本式：
+Poly1305 の基本式
 
-\[
-MAC(m) = r \cdot acc(m) + s
-\]
+
+MAC(m) = r `*` acc(m) + s
+
 
 より、s は次のように求められる：
 
-\[
-s = MAC(m) - r \cdot acc(m)
-\]
+
+s = MAC(m) - r `*` acc(m)
+
  
-実装では、MAC と temp_tag を整数化して差分を取る：
+実装では、MAC と temp_tag を整数化して差分を取る
 
 ```python
 tag_int = int.from_bytes(num, 'little')
@@ -85,9 +85,9 @@ s = s_int.to_bytes(16, 'little').hex()
 禁止されている TARGET（`admin=true`）の MAC を **正規の計算式どおりに再現できる**。
 
 Poly1305 の MAC は次の式で定義されている：
-\[
-MAC(m) = r \cdot acc(m) + s
-\]
+
+MAC(m) = r `*` acc(m) + s
+
 
 つまり、TARGET に対しても同じ式がそのまま使える。
 
