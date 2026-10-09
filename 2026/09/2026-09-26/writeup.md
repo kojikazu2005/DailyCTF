@@ -20,7 +20,9 @@
 ## 試行錯誤
 1. .pycファイルをインポートして、dir()とdis.dis()を実行してみる。
 ### dir()の結果
-'''['EYE_DATA', 'Path', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'is_inside_the_typhoon_eye', 'main', 'reverse_the_wind']'''
+```
+['EYE_DATA', 'Path', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'is_inside_the_typhoon_eye', 'main', 'reverse_the_wind']
+```
 ### dis.dis()の結果
 mainの内容を見ると`answer`の値と`reverse_the_wind(EYE_DATA)`が一致する必要があることが予想できる。
 また、Hintが与えられていて、ファイルを台風の目に入れろという指示がある。
@@ -61,7 +63,7 @@ Disassembly of main:
              52 LOAD_CONST               4 ('The wind is still too strong...')
              54 CALL_FUNCTION            1
 ```
-is_inside_the_typhoon_eyeを見てみるとfileのパスを取得していることがわかる。そして`current_place`と`required_place`で比較していることが読み取れる。required_placeを見てみると**(101,121,101)**の内容をデコードしている。ASCIIで調べてみると**eye**という文字になったので、eyeというディレクトリを作成し.pycファイルとその中に配置した。
+is_inside_the_typhoon_eyeを見てみるとfileのパスを取得していることがわかる。そして`current_place`と`required_place`で比較していることが読み取れる。required_placeを見てみると **(101,121,101)** の内容をデコードしている。ASCIIで調べてみると **eye** という文字になったので、eyeというディレクトリを作成し.pycファイルとその中に配置した。
 ```
 Disassembly of is_inside_the_typhoon_eye:
  19           0 LOAD_GLOBAL              0 (Path)
@@ -94,7 +96,7 @@ python3.10で実行するとHintが表示されたが、入力は受け付けて
 
 
 3. 正解となる入力を調べる
-dis.dis()で内容を確認したときに、answer`の値と`reverse_the_wind(EYE_DATA)`の値を比較していたので、`reverse_the_wind(EYE_DATA)`の値を入力する。
+dis.dis()で内容を確認したときに、`answer`の値と`reverse_the_wind(EYE_DATA)`の値を比較していたので、`reverse_the_wind(EYE_DATA)`の値を入力する。
 `reverse_the_wind`も`EYE_DATA`もdir()で表示されたので、そのまま利用する。
 ```
 answer = server.reverse_the_wind(server.EYE_DATA)
