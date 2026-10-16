@@ -1,0 +1,13 @@
+# 環境変数・鍵（最重要）
+.env
+*.pem
+*.key
+
+# OS自動生成ファイル
+.DS_Store
+Thumbs.db
+
+# キャッシュ・依存関係
+__pycache__/
+*.pyc
+node_modules/
